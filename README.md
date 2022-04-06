@@ -1,2 +1,2 @@
 # EC544_Project
-EC544 Project
+A Data Encrypted Neck Healthcare System Based on FRDM Sensor
