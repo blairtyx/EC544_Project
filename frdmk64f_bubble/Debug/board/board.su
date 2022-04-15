@@ -1,0 +1,7 @@
+../board/board.c:17:6:BOARD_InitDebugConsole	16	static
+../board/board.c:23:6:BOARD_I2C_Init	32	static
+../board/board.c:31:10:BOARD_I2C_Send	48	static
+../board/board.c:52:10:BOARD_I2C_Receive	48	static
+../board/board.c:73:6:BOARD_Accel_I2C_Init	8	static
+../board/board.c:78:10:BOARD_Accel_I2C_Send	40	static
+../board/board.c:85:10:BOARD_Accel_I2C_Receive	32	static

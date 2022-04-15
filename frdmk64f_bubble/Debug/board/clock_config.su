@@ -1,0 +1,8 @@
+C:\Users\hxpHerman\Documents\MCUXpressoIDE_11.5.0_7232\workspace\frdmk64f_bubble_peripheral\drivers/fsl_clock.h:889:20:CLOCK_SetSimSafeDivs	4	static
+C:\Users\hxpHerman\Documents\MCUXpressoIDE_11.5.0_7232\workspace\frdmk64f_bubble_peripheral\drivers/fsl_clock.h:1229:20:CLOCK_SetXtal0Freq	16	static
+C:\Users\hxpHerman\Documents\MCUXpressoIDE_11.5.0_7232\workspace\frdmk64f_bubble_peripheral\drivers/fsl_smc.h:256:20:SMC_SetPowerModeProtection	16	static
+C:\Users\hxpHerman\Documents\MCUXpressoIDE_11.5.0_7232\workspace\frdmk64f_bubble_peripheral\drivers/fsl_smc.h:275:33:SMC_GetPowerModeState	16	static
+../board/clock_config.c:82:13:CLOCK_CONFIG_SetFllExtRefDiv	16	static
+../board/clock_config.c:90:6:BOARD_InitBootClocks	8	static
+../board/clock_config.c:185:6:BOARD_BootClockRUN	8	static
+../board/clock_config.c:285:6:BOARD_BootClockVLPR	8	static

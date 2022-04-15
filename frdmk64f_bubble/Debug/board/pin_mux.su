@@ -1,0 +1,7 @@
+C:\Users\hxpHerman\Documents\MCUXpressoIDE_11.5.0_7232\workspace\frdmk64f_bubble_peripheral\drivers/fsl_clock.h:668:20:CLOCK_EnableClock	24	static
+C:\Users\hxpHerman\Documents\MCUXpressoIDE_11.5.0_7232\workspace\frdmk64f_bubble_peripheral\drivers/fsl_port.h:271:20:PORT_SetPinConfig	32	static
+C:\Users\hxpHerman\Documents\MCUXpressoIDE_11.5.0_7232\workspace\frdmk64f_bubble_peripheral\drivers/fsl_port.h:374:20:PORT_SetPinMux	24	static
+../board/pin_mux.c:41:6:BOARD_InitBootPins	8	static
+../board/pin_mux.c:67:6:BOARD_InitPins	16	static
+../board/pin_mux.c:148:6:BOARD_I2C_ConfigurePins	16	static
+../board/pin_mux.c:206:6:BOARD_Init_I2C_GPIO_pins	16	static
