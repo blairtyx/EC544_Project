@@ -1,0 +1,17 @@
+{
+    "config": {
+        "server-host": {
+            "help": "IP address of the server in the same sub-network",
+            "value": "192.168.3.1"
+        }
+    },
+    "target_overrides": {
+        "*": {
+            "mbed-trace.enable": true,
+            "mbed-trace.max-level": "TRACE_LEVEL_INFO",
+            "platform.error-filename-capture-enabled": true,
+            "platform.stdio-convert-newlines": true,
+            "platform.stdio-baud-rate": 115200
+        }
+    }
+}
