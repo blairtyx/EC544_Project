@@ -7,13 +7,14 @@
 #include "SocketAddress.h"
 #include "EthernetInterface.h"
 #include "mbed-trace/mbed_trace.h"
-#include "MMA8652.h"
+#include "rscombo.h"
 #include "nsapi_types.h"
 #include <cstdio>
 
 #define TEST_BUTTON
 // #define TEST_TRANSMIT
 // #define TEST_DUAL_TRANSMIT
+// #define TEST_CODEC
 
 bool TRANS_FLAG=0;
 
@@ -24,6 +25,30 @@ DigitalOut led_green(LED2);
 InterruptIn btn(BUTTON1);
 
 #define TRACE_GROUP "Main"
+
+#if defined(TEST_CODEC)
+
+unsigned char msg[] = "Nervously I loaded the twin ducks aboard the revolving platform. \
+This is mainly the suppliment info to rep12123";
+
+#define ML (sizeof (msg) + NPAR)
+
+unsigned char codeword[ML];
+
+void insert_erasure(unsigned char codeword[], 
+                    int csize, 
+                    int eloc,  
+                    unsigned char eraselist[], 
+                    int *numerase)
+{
+	codeword[ eloc - 1 ] = '~';
+	eraselist[*numerase] =  csize - eloc;
+	(*numerase)++;
+}
+#endif
+
+
+#if defined(TEST_TRANSMIT)
 
 nsapi_error_t establish_eth(EthernetInterface &eth, 
                             const SocketAddress &ip_address, 
@@ -73,12 +98,17 @@ end:
     return ret;
 }
 
+#endif
+
+#if defined(TEST_BUTTON)
+
 void button_pressed()
 {
     led_red = !led_red;
     led_green = !led_green;
     TRANS_FLAG = !TRANS_FLAG;
 }
+#endif
 
 // main() runs in its own thread in the OS
 int main()
@@ -100,9 +130,26 @@ int main()
         }
     }
 
-
-
 #endif
+
+#if defined(TEST_CODEC)
+    tr_info("NPAR: %d, ML: %d", NPAR, ML);
+    unsigned char erasures[NPAR];
+    int nerasures, i ;
+
+    /* Encode data into codeword, adding NPAR parity bytes */
+	rs_encode_data(msg, sizeof(msg), codeword);
+    tr_info("Original data is:\"%u\"\n", msg);
+    tr_info("Encoded data is: \"%u\"\n", codeword); // note that the tailing part is not shown
+
+    // simulate erasure 
+	for(nerasures = 0, i=1; i <= NPAR; i++)
+	{
+		insert_erasure(codeword, ML, i*2, erasures, &nerasures);
+	}
+	tr_info("with erasures: \"%s\"\n", codeword);
+#endif
+
 
 #if defined(TEST_TRANSMIT)
     // init Ethernet and TCP socket
