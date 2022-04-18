@@ -31,3 +31,8 @@ FRDM-K64F tracing result:
 
 [INFO][Main]: End of demo
 ```
+
+## Next Step
+- [] Try message queue and integrate sensor data module + codec module + transmitting module 
+- [] update server side decoding module and server side service daemon
+- [] retreive data from server decoding method and simulate neck movement in command line interface.
