@@ -14,7 +14,7 @@ Means the FRDM-K64F side
 
 ### Dev Notes
 - Tested Static IP TCP Socket Data Transmition between (2-way) on FRDM-K64F and RPI. 
-  - Transmit performance: ~1000 packet/s, 128 bit/packet
+  - Transmit performance: ~1000 packet/s, 128 byte/packet
 - Create dedicated function based on current implementation. 
 
 ## Codec
