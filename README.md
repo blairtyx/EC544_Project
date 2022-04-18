@@ -1,7 +1,6 @@
 # EC544_Project
 A Data Encrypted Neck Healthcare System Based on FRDM Sensor
 
-
 ## Data TX/RX 
 
 ### Server Side
@@ -19,4 +18,16 @@ Means the FRDM-K64F side
 
 ## Codec
 - Test the basic Reed-Soloman Code operation. 
+  
+FRDM-K64F tracing result:
+```plaintext
+[INFO][Main]: Start Reed-Soloman Test
+[INFO][Main]: NPAR: 16, ML: 128
+[INFO][Main]: Original data is:"536806816"
 
+[INFO][Main]: Encoded data is: "536812045"
+
+[INFO][Main]: with erasures: "N~r~o~s~y~I~l~a~e~ ~h~ ~w~n~d~c~s aboard the revolving platform. This is mainly the suppliment info to rep12123"
+
+[INFO][Main]: End of demo
+```
