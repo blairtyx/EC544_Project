@@ -11,9 +11,9 @@
 #include "nsapi_types.h"
 #include <cstdio>
 
-#define TEST_BUTTON
-// #define TEST_TRANSMIT
-// #define TEST_DUAL_TRANSMIT
+// #define TEST_BUTTON
+#define TEST_TRANSMIT
+#define TEST_DUAL_TRANSMIT
 // #define TEST_CODEC
 
 bool TRANS_FLAG=0;
@@ -26,8 +26,11 @@ InterruptIn btn(BUTTON1);
 
 #define TRACE_GROUP "Main"
 
-#if defined(TEST_CODEC)
 
+
+
+/* Test the Reed-Soloman Codec */
+#if defined(TEST_CODEC)
 unsigned char msg[] = "Nervously I loaded the twin ducks aboard the revolving platform. \
 This is mainly the suppliment info to rep12123";
 
@@ -48,13 +51,15 @@ void insert_erasure(unsigned char codeword[],
 #endif
 
 
-#if defined(TEST_TRANSMIT)
 
+
+
+/* Test Transmission over TCP socket */
+#if defined(TEST_TRANSMIT)
 nsapi_error_t establish_eth(EthernetInterface &eth, 
                             const SocketAddress &ip_address, 
                             const SocketAddress &netmask, 
-                            const SocketAddress &gateway)
-{
+                            const SocketAddress &gateway){
     nsapi_error_t ret;
     SocketAddress localAddress;
 
@@ -78,8 +83,7 @@ end:
 nsapi_error_t establish_TCP_socket(TCPSocket &socket, 
                                 EthernetInterface &eth, 
                                 const char *addr, 
-                                uint16_t port)
-{
+                                uint16_t port){
     nsapi_error_t ret;
     SocketAddress a;
     socket.open(&eth);
@@ -93,15 +97,18 @@ nsapi_error_t establish_TCP_socket(TCPSocket &socket,
         tr_error("TCP Socket Failed: %x", ret);
         goto end;
     }
-    tr_error("TCP Socket Established at %s:%d", addr, port);
+    tr_info("TCP Socket Established at %s:%d", addr, port);
 end:
     return ret;
 }
 
 #endif
 
-#if defined(TEST_BUTTON)
 
+
+
+/* Test the act of the button */
+#if defined(TEST_BUTTON)
 void button_pressed()
 {
     led_red = !led_red;
@@ -120,8 +127,6 @@ int main()
 
 #if defined(TEST_BUTTON)
     tr_info("Config digital accelerometer");
-
-    // float accel_data[3]; float accel_rms=0.0;
     btn.fall(&button_pressed);
     while(1)
     {
@@ -129,8 +134,9 @@ int main()
             tr_info("button preessed");
         }
     }
-
 #endif
+
+
 
 #if defined(TEST_CODEC)
     tr_info("NPAR: %d, ML: %d", NPAR, ML);
@@ -155,9 +161,10 @@ int main()
     // init Ethernet and TCP socket
     EthernetInterface eth;
     TCPSocket socket_0;
-    char sbuffer[64]; // send buffer
+    char sbuffer_0[64]; // send buffer
 
 #if defined(TEST_DUAL_TRANSMIT)
+    char sbuffer_1[64];
     TCPSocket socket_1;
 #endif 
     // set the Ethernet Interface
@@ -186,13 +193,14 @@ int main()
     // Send a simple request
     for (int i=0; i<10; i++){
         int scount;
-        sprintf(sbuffer, "[Server0] Hi, im client No.%d\r\n", i);
-        scount = socket_0.send(sbuffer, sizeof sbuffer);
-        printf("sent %d [%.*s]", scount, strstr(sbuffer, "\r\n") - sbuffer, sbuffer);
+        sprintf(sbuffer_0, "[Server0] Hi, im client No.%d", i);
+        scount = socket_0.send(sbuffer_0, sizeof sbuffer_0);
+        printf("sent %d [%.*s]\n", scount, strstr(sbuffer_0, "\r\n") - sbuffer_0, sbuffer_0);
+        ThisThread::sleep_for(100ms);
 #if defined(TEST_DUAL_TRANSMIT)
-        sprintf(sbuffer, "[Server1] Hi, im client No.%d\r\n", i);
-        scount = socket_1.send(sbuffer, sizeof sbuffer);
-        printf("sent %d [%.*s]", scount, strstr(sbuffer, "\r\n") - sbuffer, sbuffer);
+        sprintf(sbuffer_1, "[Server1] Hi, im client No.%d", i);
+        scount = socket_1.send(sbuffer_1, sizeof sbuffer_1);
+        printf("sent %d [%.*s]\n", scount, strstr(sbuffer_1, "\r\n") - sbuffer_1, sbuffer_1);
 #endif
     }
 

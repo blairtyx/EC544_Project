@@ -2,7 +2,7 @@
     "config": {
         "local-host": {
             "help": "Static IP address of this device in the same sub-network",
-            "value": "\"192.168.50.207\""
+            "value": "\"192.168.3.207\""
         }, 
         "local-mask": {
             "help": "Subnet netmask", 
@@ -10,7 +10,7 @@
         }, 
         "local-gateway": {
             "help": "Subnet gateway",
-            "value": "\"192.168.50.1\""
+            "value": "\"192.168.3.1\""
         }, 
         "server-host-0": {
             "help": "Static IP address of the server in the same sub-network",
@@ -22,11 +22,11 @@
         }, 
         "server-host-1": {
             "help": "Static IP address of the server in the same sub-network",
-            "value": "\"192.168.50.93\""
+            "value": "\"192.168.50.206\""
         },
         "server-port-1": {
             "help": "Data Server Port", 
-            "value": "4000"
+            "value": "4001"
         }
     },
     "target_overrides": {
@@ -35,7 +35,8 @@
             "mbed-trace.max-level": "TRACE_LEVEL_INFO",
             "platform.error-filename-capture-enabled": true,
             "platform.stdio-convert-newlines": true,
-            "platform.stdio-baud-rate": 9600
+            "platform.stdio-baud-rate": 115200,
+            "target.printf_lib": "std"
         }
     }
 }
