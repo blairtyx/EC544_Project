@@ -2,5 +2,5 @@
 FROM python:3.8-bullseye
 WORKDIR /app
 COPY . .
-CMD ["python", "socket_server.py"]
+CMD ["python", "-u", "socket_server.py"]
 EXPOSE 4000
