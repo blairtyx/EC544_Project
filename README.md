@@ -33,8 +33,12 @@ FRDM-K64F tracing result:
 ```
 
 ## Next Step
-- [x] Try message queue 
-- [x] integrate sensor data module + codec module 
-- [ ] + transmitting module 
+- [x] Implement message queue 
+- [x] Integrate sensor data module + codec module 
+  - [ ] + transmitting module 
 - [ ] update server side decoding module and server side service program
-- [ ] retreive data from server decoding method and simulate neck movement in command line interface.
+  - [x] dockerize the server side with dockerfile
+  - [ ] store the received message inside of the container (note that for this method, the lifetime of these "stored" contents would only match the lifetime of this container)
+  - [ ] start multiple containers in one script
+- [ ] retreive data from server decoding method 
+- [ ] simulate neck movement in command line interface.
