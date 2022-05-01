@@ -23,8 +23,9 @@ while True:
         # Receive the data in small chunks
         while True:
             data = connection.recv(256)
-            print("index: {}".format(data[0:4]))
-            print('msg:   {}'.format(data[4:228]))
+            print("index:  {}".format(data[0:4]))
+            print('msg:    {}'.format(data[4:228]))
+            print('parity: {}'.format(data[228:244]))
             if data:
                 # print('sending data back to the client')
                 # connection.sendall(str.encode("Im the server, cheers * {}".format(counter)))

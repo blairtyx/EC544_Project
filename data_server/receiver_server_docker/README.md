@@ -20,32 +20,29 @@ sudo docker images
 ## Run the built image
 ```sh
 # run the first socket server
-sudo docker run -d -p 4000:4000 --name py_server_1 py_socket_server
+sudo docker run -d -p 4000:4000 --name py_server_0 py_socket_server
+
 # check status
 sudo docker ps
 # copy the <CONTAINER ID> of your container
 # check output of stdout
-sudo docker logs <CONTAINER ID>
+sudo docker logs --follow <CONTAINER ID>
 ```
 
 you should expect something like: (`socket_client.py is triggered on the "client-side" after we start the container)
 ```
-pi@raspberrypi:~/Workspace/receiver_server_docker $ sudo docker logs 88a1bfdbc7dc
+pi@raspberrypi:~/Workspace/receiver_server_docker $ sudo docker logs --follow 1601
 starting up on 0.0.0.0 port 4000
 waiting for a connection
-connection from ('192.168.50.93', 51228)
-received "This is the 0th message.  It will be repeated."
-received "This is the 1th message.  It will be repeated."
-received "This is the 2th message.  It will be repeated."
-received "This is the 3th message.  It will be repeated."
-received "This is the 4th message.  It will be repeated."
-received "This is the 5th message.  It will be repeated."
-received "This is the 6th message.  It will be repeated."
-received "This is the 7th message.  It will be repeated."
-received "This is the 8th message.  It will be repeated."
-received "This is the 9th message.  It will be repeated."
-received ""
-Received 10 packets
-no more data from ('192.168.50.93', 51228)
-waiting for a connection
+connection from ('192.168.50.210', 63428)
+index: b'0000'
+msg:   b'(  5.82, -2.55),(  5.82, -2.55),(  5.82, -2.55),(  5.82, -2.55),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),(  5.71, -2.68),'
+index: b'0001'
+msg:   b'(  6.02, -2.46),(  6.02, -2.46),(  6.02, -2.46),(  6.02, -2.46),(  6.02, -2.46),(  6.00, -2.59),(  6.00, -2.59),(  6.00, -2.59),(  6.00, -2.59),(  6.00, -2.59),(  6.00, -2.59),(  6.00, -2.59),(  6.00, -2.59),(  6.00, -2.59),'
+index: b'0002'
+msg:   b'(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),(  6.06, -2.53),'
+index: b'0003'
+msg:   b'(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),(  6.06, -2.57),'
+index: b'0004'
+msg:   b'( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),( 19.53,-20.87),'
 ```
