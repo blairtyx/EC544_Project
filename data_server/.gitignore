@@ -2,3 +2,5 @@
 !socket_server.py
 !socket_server_perf.py
 !socket_client.py
+!rs_decoder.py
+!rs_python.py
