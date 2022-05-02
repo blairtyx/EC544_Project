@@ -18,6 +18,7 @@
 
 /************************* Code Flow Control *************************/
 #define TRANSMITION
+#define DEBUG
 
 
 /************************* LED & Button *************************/
@@ -72,46 +73,10 @@ void send_thread(void)
 }
 
 /************************* Reed-Soloman Codec *************************/
-char msg[array_size * 16];
+char msg[array_size * 16+1];
 #define ML (sizeof (msg) + NPAR)
 unsigned char codeword[ML];
 
-int printf_ByteArray(const unsigned char *data, size_t len) 
-{
-	size_t i;
-	int result = 0;
-	for (i = 0; i < len; i++) 
-	{
-		int y;
-		int ch = data[i];
-		static const char escapec[] = "\a\b\t\n\v\f\n\'\"\?\\";
-		const char *p = strchr(escapec, ch);
-		if (p && ch) 
-		{
-			static const char escapev[] = "abtnvfn\'\"\?\\";
-			y = printf("\\%c", escapev[p - escapec]);
-		} 
-		else if (isprint(ch)) {
-			y = printf("%c", ch);
-		} else {
-			// If at end of array, assume _next_ potential character is a '0'.
-			int nch = i >= (len - 1) ? '0' : data[i + 1];
-			if (ch < 8 && (nch < '0' || nch > '7')) 
-			{
-				y = printf("\\%o", ch);
-			} else if (!isxdigit(nch)) {
-				y = printf("\\x%X", ch);
-			} else {
-				y = printf("\\o%03o", ch);
-			}
-		}
-		if (y == EOF)
-		    return EOF;
-		result += y;
-	}
-	printf("\n");
-	return result;
-}
 
 
 /************************** Transmission **************************/
@@ -181,7 +146,6 @@ int main()
 
 
 
-#ifdef TRANSMITION
     /****************** Init Ethernet and TCP socket ******************/
     tr_info("Connecting to the network...");
     EthernetInterface       eth;
@@ -189,6 +153,7 @@ int main()
     TCPSocket               socket_1; // socket 1 
     char                    sbuffer_0[256]; // send buffer 0 
     char                    sbuffer_1[256]; // send buffer 1
+#ifdef TRANSMITION
     ret = establish_eth(eth, MBED_CONF_APP_LOCAL_HOST, MBED_CONF_APP_LOCAL_MASK, MBED_CONF_APP_LOCAL_GATEWAY);
     if (ret != 0) {
         tr_info("Failed in establishing Ethernet Interface");
@@ -239,21 +204,38 @@ int main()
             rs_encode_data((unsigned char*)msg, sizeof(msg), codeword);
             // printf_ByteArray(codeword, sizeof(codeword));
             tr_info("[%d] origin msg size: %d, codeword size: %d", run, sizeof(msg), sizeof(codeword));
-            tr_info("[%d] End of one message passing", run);
-#ifdef TRANSMITION
             sprintf(sbuffer_0, "%04d", run);
             sprintf(sbuffer_1, "%04d", run);
             memcpy(sbuffer_0+4, msg, sizeof(msg));
-            memcpy(sbuffer_1+4, msg, sizeof(codeword));
+            memcpy(sbuffer_1+4, codeword, sizeof(codeword));
             tr_info("[%d] Finish memory copy", run);
-            printf_ByteArray((unsigned char*)sbuffer_0, sizeof(sbuffer_0));
-            printf_ByteArray((unsigned char*)sbuffer_1, sizeof(sbuffer_1));
+            tr_info("[%d] size of sbuffer_1: %d", run, sizeof(sbuffer_1));
+#ifdef DEBUG
+            printf("Try hex representation : \n");
+            for (int i = 0; i<sizeof(msg); i++){
+                printf("%02X", msg[i]);
+            }
+            printf("\n\n");
+            for (int i = 0; i<sizeof(codeword); i++){
+                printf("%02X", codeword[i]);
+            }
+            printf("\n\n");
+            for (int i = 229; i<245; i++){
+                printf("%02X", sbuffer_1[i]);
+            }
+            printf("\n\n");
+            for (int i = 0; i<sizeof(sbuffer_1); i++){
+                printf("%02X", sbuffer_1[i]);
+            }
+            printf("\n");
+#endif
 
+#ifdef TRANSMITION
             scount = socket_0.send(sbuffer_0, sizeof sbuffer_0);
-            tr_info("[T] sent %d [%.*s]\n", scount, strstr(sbuffer_0, "\r\n") - sbuffer_0, sbuffer_0);
+            tr_info("[T] sent %d %.*s\n", scount, strstr(sbuffer_0, "\r\n") - sbuffer_0, sbuffer_0);
             scount = socket_1.send(sbuffer_1, sizeof sbuffer_1);
-            tr_info("[T] sent %d [%.*s]\n", scount, strstr(sbuffer_1, "\r\n") - sbuffer_1, sbuffer_1);
-
+            tr_info("[T] sent %d %.*s\n", scount, strstr(sbuffer_1, "\r\n") - sbuffer_1, sbuffer_1);
+            tr_info("[%d] End of one message passing", run);
 #endif
             mpool.free(message);
             run++;

@@ -2,7 +2,7 @@
     "config": {
         "local-host": {
             "help": "Static IP address of this device in the same sub-network",
-            "value": "\"192.168.50.210\""
+            "value": "\"192.168.3.210\""
         }, 
         "local-mask": {
             "help": "Subnet netmask", 
@@ -10,7 +10,7 @@
         }, 
         "local-gateway": {
             "help": "Subnet gateway",
-            "value": "\"192.168.50.1\""
+            "value": "\"192.168.3.1\""
         }, 
         "server-host-0": {
             "help": "Static IP address of the server in the same sub-network",
