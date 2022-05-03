@@ -22,11 +22,11 @@ def animate():
 
 while True:
 
-    xx = i[0]
-    yy = i[1]
     cnt = 0
 
     for i in row['corrected']:
+        xx = i[0]
+        yy = i[1]
         if (yy > th || xx > threshold || yy < th):
             cnt += 1
             if (cnt == 500000):
