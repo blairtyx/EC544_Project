@@ -1,7 +1,32 @@
+from multiprocessing.dummy.connection import Connection
 import socket
 import datetime
 import sqlite3
 
+
+def gen_7_tables(db: sqlite3.Connection):
+    cur = db.cursor()
+    for i in range(0,7):
+        cur.execute("CREATE TABLE IF NOT EXISTS segment{} (num TEXT, content TEXT, time TIMESTAMP)".format(i))
+    db.commit()
+    
+def insert_data(db_0: sqlite3.Connection, db_1: sqlite3.Connection, data, time: datetime.datetime):
+    cur_0 = db_0.cursor()
+    cur_1 = db_1.cursor()
+    number = data[0:4].decode()
+    db_0_content = data[4:116].decode()
+    db_1_content = data[116:228].decode()
+    
+    # put the first half to db_0 
+    for i in range(0,7):
+        cur_0.execute("INSERT INTO segment{} (num, content, time) values (\"{}\", \"{}\", \"{}\")".format(
+                        i, number, db_0_content[i*16: (i+1)*16], time))
+        cur_1.execute("INSERT INTO segment{} (num, content, time) values (\"{}\", \"{}\", \"{}\")".format(
+                        i, number ,db_1_content[i*16: (i+1)*16], time))
+    db_0.commit()
+    db_1.commit()
+
+    
 
 if __name__ == "__main__":
     # init variables
@@ -18,15 +43,15 @@ if __name__ == "__main__":
     sock.listen(1)
 
     # Content databases
-    db_0 = sqlite3.connect("content_0.sqlite")
-    cur_0 = db_0.cursor()
-    cur_0.execute("CREATE TABLE IF NOT EXISTS experiments (num TEXT, content TEXT)")
-    db_0.commit()
-
+    db_0 = sqlite3.connect("content_0.sqlite", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    gen_7_tables(db_0)
+    db_1 = sqlite3.connect("content_1.sqlite", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    gen_7_tables(db_1)
+    
     # Parity database
-    db_parity = sqlite3.connect("parity_0.sqlite")
+    db_parity = sqlite3.connect("parity_0.sqlite", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cur_p = db_parity.cursor()
-    cur_p.execute("CREATE TABLE IF NOT EXISTS test (num TEXT, parity TEXT)")
+    cur_p.execute("CREATE TABLE IF NOT EXISTS parity (num TEXT, parity TEXT, time TIMESTAMP)")
     db_parity.commit()
 
     # Connection
@@ -39,13 +64,14 @@ if __name__ == "__main__":
             # Receive data 
             while True:
                 data = connection.recv(256)
+                currentDateTime = datetime.datetime.now()
                 if data:
                     print("number: {}".format(data[0:4].decode()))
                     print('content:{}'.format(data[4:228].decode()))
                     print('parity: {}'.format(data[229:245].hex())) # one byte of terminal indicator
-                    cur_0.execute("INSERT INTO experiments (num, content) values (\"{}\", \"{}\")".format(data[0:4].decode(), data[4:228].decode()))
-                    db_0.commit()
-                    cur_p.execute("INSERT INTO test (num, parity) values (\"{}\", \"{}\")".format(data[0:4].decode(), data[229:245].hex()))
+                    insert_data(db_0, db_1, data, currentDateTime)
+                    cur_p.execute("INSERT INTO parity (num, parity, time) values (\"{}\", \"{}\", \"{}\")".format(
+                                    data[0:4].decode(), data[229:245].hex(), currentDateTime))
                     db_parity.commit()
                     counter += 1
                 else:

@@ -17,11 +17,13 @@ if __name__ == "__main__":
     sock.listen(1)
 
     # Content databases
-    db_0 = sqlite3.connect("content_0.sqlite")
+    db_0 = sqlite3.connect("content_0.sqlite", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cur_0 = db_0.cursor()
-    cur_0.execute("CREATE TABLE IF NOT EXISTS experiments (num TEXT, content TEXT)")
+    cur_0.execute('''CREATE TABLE IF NOT EXISTS DEMO (num TEXT, content TEXT, time TIMESTAMP)''')
     db_0.commit()
 
+    insertQuery = '''INSERT INTO DEMO (num, content, time) 
+                        values (?, ?, ? );'''
 
     while True:
         # Wait for a connection
@@ -33,10 +35,11 @@ if __name__ == "__main__":
             # Receive data 
             while True:
                 data = connection.recv(256)
+                currentDateTime = datetime.datetime.now()
                 if data:
                     print("number: {}".format(data[0:4].decode()))
                     print('content:{}'.format(data[4:228].decode()))
-                    cur_0.execute("INSERT INTO experiments (num, content) values (\"{}\", \"{}\")".format(data[0:4].decode(), data[4:228].decode()))
+                    cur_0.execute(insertQuery, (data[0:4].decode(), data[4:228].decode(), currentDateTime))
                     db_0.commit()
                     counter += 1
                 else:
