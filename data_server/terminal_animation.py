@@ -31,5 +31,6 @@ while True:
             cnt += 1
             if (cnt == 500000):
                 animate()
+                cnt = 0
         else:
             cnt = 0
