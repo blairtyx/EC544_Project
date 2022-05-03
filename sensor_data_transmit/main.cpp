@@ -18,7 +18,7 @@
 
 /************************* Code Flow Control *************************/
 #define TRANSMITION
-#define DEBUG
+// #define DEBUG
 
 
 /************************* LED & Button *************************/
@@ -52,23 +52,19 @@ void send_thread(void)
     led_red = !led_red;
     led_green = !led_green;
     th = threshold*(-1);
-    xx = x*90.0;
-    yy = y*90.0;
     while (1) {
         message_t *t_message = mpool.try_alloc();
         while (i < array_size){
             xx = acc.getX(x) * 90.0;
             yy = acc.getY(y) * 90.0;
-            if (yy > th || xx > threshold || xx < th)
-            {
-                t_message->x[i] = xx;
-                t_message->y[i] = yy;
-                i++;
-            }     
+            t_message->x[i] = xx;
+            t_message->y[i] = yy;
+            i++;   
+            ThisThread::sleep_for(10ms);
         }
         queue.try_put(t_message);
         i = 0;
-        ThisThread::sleep_for(1000ms);
+        ThisThread::sleep_for(860ms);
     }
 }
 
@@ -187,7 +183,7 @@ int main()
             int char_ct = 0;
             int queue_ct = queue.count();
             int scount;
-            tr_info("Queue Count: %d", queue_ct);
+            tr_info("[%d] Queue Count: %d", run, queue_ct);
             // message_t *message = (message_t *)evt.value.p; // pass the return pointer 
             for (int i = 0; i < array_size; i++){
                 // tr_info("x[%d]: %f, y[%d]: %f", i, message->x[i], i, message->y[i]);
@@ -200,17 +196,18 @@ int main()
             if (char_ct > 256){
                 tr_error("TOO LONG FOR RSCODE: %d", char_ct);
             }
+#ifdef DEBUG
             tr_info("[%d] size: %d, msg is : %s", run, char_ct, msg);
+#endif
             rs_encode_data((unsigned char*)msg, sizeof(msg), codeword);
-            // printf_ByteArray(codeword, sizeof(codeword));
             tr_info("[%d] origin msg size: %d, codeword size: %d", run, sizeof(msg), sizeof(codeword));
             sprintf(sbuffer_0, "%04d", run);
             sprintf(sbuffer_1, "%04d", run);
             memcpy(sbuffer_0+4, msg, sizeof(msg));
             memcpy(sbuffer_1+4, codeword, sizeof(codeword));
             tr_info("[%d] Finish memory copy", run);
-            tr_info("[%d] size of sbuffer_1: %d", run, sizeof(sbuffer_1));
 #ifdef DEBUG
+            tr_info("[%d] size of sbuffer_1: %d", run, sizeof(sbuffer_1));
             printf("Try hex representation : \n");
             for (int i = 0; i<sizeof(msg); i++){
                 printf("%02X", msg[i]);
@@ -232,9 +229,9 @@ int main()
 
 #ifdef TRANSMITION
             scount = socket_0.send(sbuffer_0, sizeof sbuffer_0);
-            tr_info("[T] sent %d %.*s\n", scount, strstr(sbuffer_0, "\r\n") - sbuffer_0, sbuffer_0);
+            tr_info("[T] sent %d to socket_0", scount);
             scount = socket_1.send(sbuffer_1, sizeof sbuffer_1);
-            tr_info("[T] sent %d %.*s\n", scount, strstr(sbuffer_1, "\r\n") - sbuffer_1, sbuffer_1);
+            tr_info("[T] sent %d to socket_1", scount);
             tr_info("[%d] End of one message passing", run);
 #endif
             mpool.free(message);
