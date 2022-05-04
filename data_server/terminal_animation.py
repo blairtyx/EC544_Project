@@ -1,36 +1,154 @@
-import time
-import os
-import animation
+frame1 = \
+"                              Straighten your neck!!!           \n" + \
+"                                       .                        \n" + \
+"                                     `:++/:.                    \n" + \
+"                                    `+mMMNNo.                   \n" + \
+"                                    `oNMMMMs-                   \n" + \
+"                                    .oNMMMMo.                   \n" + \
+"                                   -odNMMho/.                   \n" + \
+"                                  :yMMMMM+.                     \n" + \
+"                                  .sNMMMMMy-                    \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
 
-threshold = 45
-th = threshold * (-1)
+frame2 = \
+"                              Straighten your neck!!!           \n" + \
+"                                          .                     \n" + \
+"                                        `:++/:.                 \n" + \
+"                                       `+mMMNNo.                \n" + \
+"                                       `oNMMMMs-                \n" + \
+"                                       .oNMMMMo.                \n" + \
+"                                     -odNMMho/.                 \n" + \
+"                                    :yMMMMM+.                   \n" + \
+"                                   .sNMMMMMy-                   \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
+ 
+frame3 = \
+"                              Straighten your neck!!!           \n" + \
+"                                              .                 \n" + \
+"                                           `:++/:.              \n" + \
+"                                         `+mMMNNo.              \n" + \
+"                                        `oNMMMMs-               \n" + \
+"                                        .oNMMMMo.               \n" + \
+"                                      -odNMMho/.                \n" + \
+"                                    :yMMMMM+.                   \n" + \
+"                                   .sNMMMMMy-                   \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
 
-duration = 0.125    # The duration of time in seconds between each frame.
-cycles = 10       # The number of cycles the animation plays through.
+frame4 = \
+"                              Straighten your neck!!!           \n" + \
+"                                            .                   \n" + \
+"                                          `:++/:.               \n" + \
+"                                        `+mMMNNo.               \n" + \
+"                                       `oNMMMMs-                \n" + \
+"                                      .oNMMMMo.                 \n" + \
+"                                   -odNMMho/.                   \n" + \
+"                                  :yMMMMM+.                     \n" + \
+"                                  .sNMMMMMy-                    \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
+frame5 = \
+"                              Straighten your neck!!!           \n" + \
+"                                          .                     \n" + \
+"                                         `:++/:.                \n" + \
+"                                         `+mMMNNo.              \n" + \
+"                                        `oNMMMMs-               \n" + \
+"                                       .oNMMMMo.                \n" + \
+"                                     -odNMMho/.                 \n" + \
+"                                    :yMMMMM+.                   \n" + \
+"                                   .sNMMMMMy-                   \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
 
-def animate():
-    """Iterate through the frames, printing then clearing each one to create an animation."""
-    count = 0
-    while count < cycles:
-        for frame in animation.frames:
-            print '\033[1;34m' + frame + '\033[1;m'  # Print the frame in color blue.
-            time.sleep(duration)
-            print(os.system('clear'))
-        count = count + 1
+frame6 = \
+"                              Straighten your neck!!!           \n" + \
+"                                          .                     \n" + \
+"                                        `:++/:.                 \n" + \
+"                                       `+mMMNNo.                \n" + \
+"                                       `oNMMMMs-                \n" + \
+"                                       .oNMMMMo.                \n" + \
+"                                     -odNMMho/.                 \n" + \
+"                                    :yMMMMM+.                   \n" + \
+"                                   .sNMMMMMy-                   \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
 
-# animate()
+frame7 = \
+"                              Straighten your neck!!!           \n" + \
+"                                       .                        \n" + \
+"                                     `:++/:.                    \n" + \
+"                                    `+mMMNNo.                   \n" + \
+"                                    `oNMMMMs-                   \n" + \
+"                                    .oNMMMMo.                   \n" + \
+"                                   -odNMMho/.                   \n" + \
+"                                  :yMMMMM+.                     \n" + \
+"                                  .sNMMMMMy-                    \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
 
-while True:
+frame8 = \
+"                              Straighten your neck!!!           \n" + \
+"                                       .                        \n" + \
+"                                     `:++/:.                    \n" + \
+"                                    `+mMMNNo.                   \n" + \
+"                                    `oNMMMMs-                   \n" + \
+"                                    .oNMMMMo.                   \n" + \
+"                                   -odNMMho/.                   \n" + \
+"                                  :yMMMMM+.                     \n" + \
+"                                  .sNMMMMMy-                    \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"
 
-    cnt = 0
+frames = [frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8]
 
-    for i in row['corrected']:
-        xx = i[0]
-        yy = i[1]
-        if (yy > th || xx > threshold || yy < th):
-            cnt += 1
-            if (cnt == 500000):
-                animate()
-                cnt = 0
-        else:
-            cnt = 0
+
+frame_good = \
+"                              Good Neck Position !!!            \n" + \
+"                                       .                        \n" + \
+"                                     `:++/:.                    \n" + \
+"                                    `+mMMNNo.                   \n" + \
+"                                    `oNMMMMs-                   \n" + \
+"                                    .oNMMMMo.                   \n" + \
+"                                   -odNMMho/.                   \n" + \
+"                                  :yMMMMM+.                     \n" + \
+"                                  .sNMMMMMy-                    \n" + \
+"                                  `dNMMMMMMm/`                  \n" + \
+"                                 `+NMMMMMMMN+``   ``            \n" + \
+"                                 `/NMMMMMMMMdyso+oyy`           \n" + \
+"                                  -NMMMMMMMMMMMMMNys.           \n" + \
+"                                  -NMMMMMMMMMMM--/.             \n" + \
+"                                 .hMMMMMMMNo:---:`              \n"

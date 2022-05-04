@@ -183,7 +183,7 @@ int main()
             int char_ct = 0;
             int queue_ct = queue.count();
             int scount;
-            tr_info("[%d] Queue Count: %d", run, queue_ct);
+            tr_info("[%d] Get From message queue, Queue Count: %d", run, queue_ct);
             // message_t *message = (message_t *)evt.value.p; // pass the return pointer 
             for (int i = 0; i < array_size; i++){
                 // tr_info("x[%d]: %f, y[%d]: %f", i, message->x[i], i, message->y[i]);
